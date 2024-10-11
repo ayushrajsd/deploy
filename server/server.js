@@ -1,7 +1,21 @@
 const express = require("express");
+const cors = require("cors");
 
 const app = express();
+const path = require("path");
+const clientBuildPath = path.join(__dirname, "../client/build");
+console.log(clientBuildPath);
+
+app.use(express.static(clientBuildPath));
+
 require("dotenv").config(); // load env variables into process.env
+app.use(
+  cors({
+    origin: "*", // Allow only your frontend origin
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 /**
  * to read from env file, we use a package called
